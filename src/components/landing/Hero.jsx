@@ -20,8 +20,8 @@ const Hero = () => {
             transition={{ duration: 0.8 }}
             className="mb-6 text-5xl font-bold text-gray-900 md:text-7xl"
           >
-            Tìm Kiếm Nhân Tài
-            <span className="text-blue-600"> Thông Minh</span>
+            Find Talent
+            <span className="text-blue-600"> Smarter</span>
           </motion.h1>
 
           <motion.p
@@ -30,7 +30,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-8 text-xl text-gray-600 md:text-2xl"
           >
-            Sàng lọc CV tự động với AI, tiết kiệm thời gian và tìm được ứng viên phù hợp nhất
+            Automatically screen resumes with AI, save time, and find the best candidates
           </motion.p>
 
           <motion.div
@@ -40,10 +40,10 @@ const Hero = () => {
             className="flex flex-col justify-center gap-4 sm:flex-row"
           >
             <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-              Dùng thử miễn phí
+              Try for Free
             </Button>
             <Button size="lg" variant="outline">
-              Xem demo
+              View Demo
             </Button>
           </motion.div>
         </div>

@@ -108,7 +108,7 @@ export default function Login() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-3xl font-bold text-gray-900"
             >
-              Chào mừng trở lại!
+              Welcome Back!
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -116,7 +116,7 @@ export default function Login() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-2 text-sm text-gray-600"
             >
-              Đăng nhập để tiếp tục với Hire Nova
+              Log in to continue with Hire Nova
             </motion.p>
           </div>
 
@@ -131,7 +131,7 @@ export default function Login() {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Nhập email của bạn"
+                          placeholder="Enter your email"
                           type="email"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           {...field}
@@ -147,10 +147,10 @@ export default function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mật khẩu</FormLabel>
+                      <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Nhập mật khẩu của bạn"
+                          placeholder="Enter your password"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           type={isPasswordVisible ? TEXT_TYPE : PASSWORD_TYPE}
                           {...field}
@@ -173,7 +173,7 @@ export default function Login() {
                     checked={rememberMe}
                   />
                   <Label htmlFor="remember" className="ml-2 text-sm text-gray-600 cursor-pointer">
-                    Ghi nhớ đăng nhập
+                    Remember me
                   </Label>
                 </div>
 
@@ -181,7 +181,7 @@ export default function Login() {
                   to={path.forgotPassword}
                   className="text-sm font-medium text-blue-600 hover:text-blue-500"
                 >
-                  Quên mật khẩu?
+                  Forgot password?
                 </Link>
               </div>
 
@@ -190,17 +190,17 @@ export default function Login() {
                 className="w-full py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 type="submit"
               >
-                Đăng nhập
+                Log In
               </Button>
 
               <div className="text-center">
                 <p className="text-sm text-gray-600">
-                  Chưa có tài khoản?{' '}
+                  Don’t have an account?{' '}
                   <Link
                     to={path.register}
                     className="font-medium text-blue-600 hover:text-blue-500"
                   >
-                    Đăng ký ngay
+                    Sign up now
                   </Link>
                 </p>
               </div>
@@ -225,9 +225,9 @@ export default function Login() {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="max-w-lg p-8 text-center text-white">
-              <h2 className="mb-4 text-4xl font-bold">Tìm Kiếm Nhân Tài Thông Minh</h2>
+              <h2 className="mb-4 text-4xl font-bold">Smart Talent Search</h2>
               <p className="text-lg">
-                Sử dụng AI để sàng lọc CV và tìm kiếm ứng viên phù hợp nhất cho doanh nghiệp của bạn
+                Use AI to screen resumes and find the most suitable candidates for your business
               </p>
             </div>
           </div>

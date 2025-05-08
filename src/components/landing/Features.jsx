@@ -4,23 +4,23 @@ import { Brain, Clock, FileSearch, Users } from 'lucide-react'
 const features = [
   {
     icon: <Brain className="w-12 h-12 text-blue-600" />,
-    title: 'AI Thông Minh',
-    description: 'Sử dụng công nghệ AI tiên tiến để phân tích và đánh giá CV một cách chính xác'
+    title: 'Smart AI',
+    description: 'Uses advanced AI technology to accurately analyze and evaluate resumes'
   },
   {
     icon: <Clock className="w-12 h-12 text-blue-600" />,
-    title: 'Tiết Kiệm Thời Gian',
-    description: 'Giảm 80% thời gian sàng lọc CV, tập trung vào việc phỏng vấn ứng viên tiềm năng'
+    title: 'Time Saving',
+    description: 'Reduce CV screening time by 80%, focus on interviewing potential candidates'
   },
   {
     icon: <FileSearch className="w-12 h-12 text-blue-600" />,
-    title: 'Tìm Kiếm Chính Xác',
-    description: 'Tìm kiếm ứng viên phù hợp dựa trên kỹ năng, kinh nghiệm và yêu cầu công việc'
+    title: 'Precise Matching',
+    description: 'Find the right candidates based on skills, experience, and job requirements'
   },
   {
     icon: <Users className="w-12 h-12 text-blue-600" />,
-    title: 'Quản Lý Ứng Viên',
-    description: 'Quản lý toàn bộ quy trình tuyển dụng từ sàng lọc đến phỏng vấn'
+    title: 'Candidate Management',
+    description: 'Manage the entire recruitment process from screening to interviewing'
   }
 ]
 
@@ -35,9 +35,9 @@ const Features = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Tính Năng Nổi Bật</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Key Features</h2>
           <p className="text-xl text-gray-600">
-            Giải pháp toàn diện cho quy trình tuyển dụng của bạn
+            A comprehensive solution for your recruitment process
           </p>
         </motion.div>
 

@@ -3,27 +3,27 @@ import { Star } from 'lucide-react'
 
 const testimonials = [
   {
-    name: 'Nguyễn Văn A',
+    name: 'Nguyen Van A',
     position: 'HR Manager',
     company: 'Tech Solutions',
     content:
-      'Hire Nova đã giúp chúng tôi giảm 70% thời gian sàng lọc CV và tìm được những ứng viên chất lượng cao.',
+      'Hire Nova has helped us reduce resume screening time by 70% and find high-quality candidates.',
     rating: 5
   },
   {
-    name: 'Trần Thị B',
+    name: 'Tran Thi B',
     position: 'Talent Acquisition',
     company: 'Digital Corp',
     content:
-      'Công cụ AI của Hire Nova rất thông minh, giúp chúng tôi tìm được những ứng viên phù hợp nhất với vị trí.',
+      'Hire Nova’s AI tool is highly intelligent, helping us find the most suitable candidates for the position.',
     rating: 5
   },
   {
-    name: 'Lê Văn C',
+    name: 'Le Van C',
     position: 'Recruitment Lead',
     company: 'Innovation Hub',
     content:
-      'Tôi rất ấn tượng với khả năng phân tích và đánh giá CV của Hire Nova. Đây là giải pháp tuyệt vời cho các doanh nghiệp.',
+      'I’m very impressed with Hire Nova’s resume analysis and evaluation capabilities. It’s an excellent solution for businesses.',
     rating: 5
   }
 ]
@@ -39,9 +39,9 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4 text-4xl font-bold text-gray-900">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+          <h2 className="mb-4 text-4xl font-bold text-gray-900">What Our Customers Say</h2>
           <p className="text-xl text-gray-600">
-            Những đánh giá từ các doanh nghiệp đã sử dụng Hire Nova
+            Reviews from businesses that have used Hire Nova
           </p>
         </motion.div>
 
@@ -64,7 +64,7 @@ const Testimonials = () => {
               <div>
                 <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
                 <p className="text-gray-600">
-                  {testimonial.position} tại {testimonial.company}
+                  {testimonial.position} at {testimonial.company}
                 </p>
               </div>
             </motion.div>

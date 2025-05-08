@@ -21,7 +21,7 @@ const PageNotFound = () => {
       <h2 className="mb-5">Page not found</h2>
       <Link to={path.home} className="flex items-center gap-2 hover:text-primary">
         {IconLeftArrow}
-        Trang chủ
+        Return to home
       </Link>
     </div>
   )

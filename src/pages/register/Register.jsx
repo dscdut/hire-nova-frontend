@@ -50,11 +50,11 @@ export default function Register() {
     const registerData = form.getValues()
     mutationRegister.mutate(registerData, {
       onSuccess: () => {
-        toast.success('Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.')
+        toast.success('Registration successful! Please check your email to verify your account.')
         navigate(path.login)
       },
       onError: () => {
-        toast.error('Đăng ký thất bại!')
+        toast.error('Registration failed!')
       },
       onSettled: () => {
         setIsLoading(false)
@@ -84,7 +84,7 @@ export default function Register() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-3xl font-bold text-gray-900"
             >
-              Tạo tài khoản mới
+              Create a New Account
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -92,7 +92,7 @@ export default function Register() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-2 text-sm text-gray-600"
             >
-              Tham gia cùng Hire Nova để tìm kiếm cơ hội việc làm tốt nhất
+              Join Hire Nova to explore the best job opportunities
             </motion.p>
           </div>
 
@@ -107,7 +107,7 @@ export default function Register() {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Nhập email của bạn"
+                          placeholder="Enter your email"
                           type="email"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           {...field}
@@ -123,10 +123,10 @@ export default function Register() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Mật khẩu</FormLabel>
+                      <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Nhập mật khẩu của bạn"
+                          placeholder="Enter your password"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           type={isPasswordVisible ? TEXT_TYPE : PASSWORD_TYPE}
                           {...field}
@@ -144,10 +144,10 @@ export default function Register() {
                   name="confirmPassword"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Xác nhận mật khẩu</FormLabel>
+                      <FormLabel>Confirm Password</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Nhập lại mật khẩu của bạn"
+                          placeholder="Re-enter your password"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                           type={isConfirmPasswordVisible ? TEXT_TYPE : PASSWORD_TYPE}
                           {...field}
@@ -167,13 +167,13 @@ export default function Register() {
                   className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                 />
                 <Label htmlFor="terms" className="ml-2 text-sm text-gray-600 cursor-pointer">
-                  Tôi đồng ý với{' '}
+                  I agree to the{' '}
                   <Link to="#" className="text-blue-600 hover:text-blue-500">
-                    Điều khoản dịch vụ
+                    Terms of Service
                   </Link>{' '}
-                  và{' '}
+                  and{' '}
                   <Link to="#" className="text-blue-600 hover:text-blue-500">
-                    Chính sách bảo mật
+                    Privacy Policy
                   </Link>
                 </Label>
               </div>
@@ -183,14 +183,14 @@ export default function Register() {
                 className="w-full py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 type="submit"
               >
-                Đăng ký
+                Sign Up
               </Button>
 
               <div className="text-center">
                 <p className="text-sm text-gray-600">
-                  Đã có tài khoản?{' '}
+                  Already have an account?{' '}
                   <Link to={path.login} className="font-medium text-blue-600 hover:text-blue-500">
-                    Đăng nhập ngay
+                    Log in now
                   </Link>
                 </p>
               </div>
@@ -215,10 +215,9 @@ export default function Register() {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="max-w-lg p-8 text-center text-white">
-              <h2 className="mb-4 text-4xl font-bold">Khám Phá Cơ Hội Mới</h2>
+              <h2 className="mb-4 text-4xl font-bold">Discover New Opportunities</h2>
               <p className="text-lg">
-                Tham gia cùng chúng tôi để tìm kiếm công việc phù hợp với kỹ năng và kinh nghiệm của
-                bạn
+                Join us to find jobs that match your skills and experience
               </p>
             </div>
           </div>

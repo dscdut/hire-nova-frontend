@@ -4,20 +4,20 @@ import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from 'luc
 const Footer = () => {
   const footerLinks = {
     company: [
-      { label: 'Về chúng tôi', href: '#' },
-      { label: 'Tuyển dụng', href: '#' },
+      { label: 'About Us', href: '#' },
+      { label: 'Careers', href: '#' },
       { label: 'Blog', href: '#' },
-      { label: 'Liên hệ', href: '#' }
+      { label: 'Contact', href: '#' }
     ],
     product: [
-      { label: 'Tính năng', href: '#features' },
-      { label: 'Bảng giá', href: '#' },
+      { label: 'Features', href: '#features' },
+      { label: 'Pricing', href: '#' },
       { label: 'Demo', href: '#' },
       { label: 'FAQ', href: '#' }
     ],
     legal: [
-      { label: 'Điều khoản sử dụng', href: '#' },
-      { label: 'Chính sách bảo mật', href: '#' },
+      { label: 'Terms of Service', href: '#' },
+      { label: 'Privacy Policy', href: '#' },
       { label: 'Cookie Policy', href: '#' }
     ]
   }
@@ -32,7 +32,7 @@ const Footer = () => {
   const contactInfo = [
     { icon: <Mail className="w-5 h-5" />, text: 'contact@hirenova.com' },
     { icon: <Phone className="w-5 h-5" />, text: '+84 123 456 789' },
-    { icon: <MapPin className="w-5 h-5" />, text: 'Hà Nội, Việt Nam' }
+    { icon: <MapPin className="w-5 h-5" />, text: 'Hanoi, Vietnam' }
   ]
 
   return (
@@ -48,7 +48,7 @@ const Footer = () => {
           >
             <h3 className="mb-4 text-2xl font-bold text-white">Hire Nova</h3>
             <p className="mb-4">
-              Giải pháp AI thông minh giúp doanh nghiệp tìm kiếm và sàng lọc ứng viên hiệu quả
+              Smart AI solution helping businesses efficiently find and screen candidates
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link, index) => (
@@ -71,7 +71,7 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-4 text-lg font-semibold text-white">Công ty</h4>
+            <h4 className="mb-4 text-lg font-semibold text-white">Company</h4>
             <ul className="space-y-2">
               {footerLinks.company.map((link, index) => (
                 <motion.li
@@ -96,7 +96,7 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-4 text-lg font-semibold text-white">Sản phẩm</h4>
+            <h4 className="mb-4 text-lg font-semibold text-white">Product</h4>
             <ul className="space-y-2">
               {footerLinks.product.map((link, index) => (
                 <motion.li
@@ -121,7 +121,7 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
           >
-            <h4 className="mb-4 text-lg font-semibold text-white">Liên hệ</h4>
+            <h4 className="mb-4 text-lg font-semibold text-white">Contact</h4>
             <ul className="space-y-4">
               {contactInfo.map((item, index) => (
                 <motion.li

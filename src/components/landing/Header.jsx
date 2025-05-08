@@ -18,10 +18,10 @@ const Header = () => {
   }, [])
 
   const menuItems = [
-    { label: 'Trang chủ', href: '#' },
-    { label: 'Tính năng', href: '#features' },
-    { label: 'Cách hoạt động', href: '#how-it-works' },
-    { label: 'Đánh giá', href: '#testimonials' }
+    { label: 'Home', href: '#' },
+    { label: 'Features', href: '#features' },
+    { label: 'How It Works', href: '#how-it-works' },
+    { label: 'Testimonials', href: '#testimonials' }
   ]
 
   return (
@@ -63,7 +63,7 @@ const Header = () => {
               </motion.a>
             ))}
             <Link to="/login">
-              <Button className="bg-blue-600 hover:bg-blue-700">Đăng nhập</Button>
+              <Button className="bg-blue-600 hover:bg-blue-700">Sign In</Button>
             </Link>
           </motion.nav>
 
@@ -110,7 +110,7 @@ const Header = () => {
                   </motion.a>
                 ))}
                 <Link to="/login">
-                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Đăng nhập</Button>
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Sign In</Button>
                 </Link>
               </nav>
             </div>

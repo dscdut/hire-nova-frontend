@@ -4,23 +4,23 @@ import { Upload, Search, FileCheck, UserCheck } from 'lucide-react'
 const steps = [
   {
     icon: <Upload className="w-12 h-12 text-blue-600" />,
-    title: 'Tải CV Lên',
-    description: 'Tải lên CV của ứng viên hoặc kết nối với các nguồn tuyển dụng'
+    title: 'Upload Resumes',
+    description: 'Upload candidate resumes or connect with recruitment sources'
   },
   {
     icon: <Search className="w-12 h-12 text-blue-600" />,
-    title: 'AI Phân Tích',
-    description: 'Hệ thống AI sẽ phân tích và đánh giá CV dựa trên các tiêu chí'
+    title: 'AI Analysis',
+    description: 'The AI system analyzes and evaluates resumes based on criteria'
   },
   {
     icon: <FileCheck className="w-12 h-12 text-blue-600" />,
-    title: 'Sàng Lọc Tự Động',
-    description: 'Tự động sàng lọc và xếp hạng ứng viên phù hợp nhất'
+    title: 'Automated Screening',
+    description: 'Automatically screen and rank the most suitable candidates'
   },
   {
     icon: <UserCheck className="w-12 h-12 text-blue-600" />,
-    title: 'Phỏng Vấn',
-    description: 'Tập trung vào việc phỏng vấn những ứng viên tiềm năng nhất'
+    title: 'Interview',
+    description: 'Focus on interviewing the most promising candidates'
   }
 ]
 
@@ -35,9 +35,9 @@ const HowItWorks = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Cách Thức Hoạt Động</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
           <p className="text-xl text-gray-600">
-            Quy trình đơn giản, hiệu quả và tiết kiệm thời gian
+            A simple, efficient, and time-saving process
           </p>
         </motion.div>
 
