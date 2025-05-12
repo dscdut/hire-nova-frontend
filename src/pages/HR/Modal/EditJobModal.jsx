@@ -9,31 +9,53 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-export default function AddJobModal() {
-    // State for job fields
+export default function EditJobModal({ job }) {
+    // State for job fields, initialized with job prop
     const [jobData, setJobData] = useState({
-        industryId: "",
-        title: "",
-        description: "",
-        location: "",
-        descRate: "",
-        salaryMin: "",
-        salaryMax: "",
-        level: "",
-        startTime: "",
-        endTime: "",
-        notes: "", // New field for notes
+        industryId: job?.industryId || "",
+        title: job?.title || "",
+        description: job?.description || "",
+        location: job?.location || "",
+        descRate: job?.descRate || "",
+        salaryMin: job?.salaryMin || "",
+        salaryMax: job?.salaryMax || "",
+        level: job?.level || "",
+        startTime: job?.startTime || "",
+        endTime: job?.endTime || "",
+        notes: job?.notes || "",
     })
 
-    // State for criteria
-    const [criteria, setCriteria] = useState([{ name: "", weight: "", detail: "" }])
-    
+
+    // State for criteria, initialized with job criteria
+    const [criteria, setCriteria] = useState(
+        job?.criteria?.length > 0
+            ? job.criteria
+            : [{ name: "", weight: "", detail: "" }]
+    )
+
     // State for input validation errors
     const [salaryError, setSalaryError] = useState({ min: false, max: false })
-    const [weightErrors, setWeightErrors] = useState([false])
-    const [dateError, setDateError] = useState(false) // New state for date validation
+    const [weightErrors, setWeightErrors] = useState(criteria.map(() => false))
+    const [dateError, setDateError] = useState(false)
+
+    // Update validation states when job prop changes
+    useEffect(() => {
+        // Validate salary fields
+        setSalaryError({
+            min: jobData.salaryMin && !/^\d+$/.test(jobData.salaryMin),
+            max: jobData.salaryMax && !/^\d+$/.test(jobData.salaryMax),
+        })
+
+        // Validate dates
+        if (jobData.startTime && jobData.endTime) {
+            setDateError(new Date(jobData.endTime) <= new Date(jobData.startTime))
+        }
+
+        // Validate criteria weights
+        setWeightErrors(criteria.map(c => c.weight && !/^\d+$/.test(c.weight)))
+    }, [jobData, criteria])
 
     // Handle changes for job data fields
     const handleJobDataChange = (field, value) => {
@@ -63,7 +85,7 @@ export default function AddJobModal() {
     // Update criterion
     const updateCriterion = (index, field, value) => {
         const updated = [...criteria]
-        
+
         if (field === "weight") {
             if (value === "" || /^\d+$/.test(value)) {
                 updated[index][field] = value
@@ -79,7 +101,7 @@ export default function AddJobModal() {
         } else {
             updated[index][field] = value
         }
-        
+
         setCriteria(updated)
     }
 
@@ -105,7 +127,8 @@ export default function AddJobModal() {
             ...jobData,
             criteria,
         }
-        console.log("Form submitted!", formData)
+        console.log("Job updated!", formData)
+        // In a real app, call an API or update function here
     }
 
     const weightExceeded = totalWeight() > 100
@@ -113,14 +136,14 @@ export default function AddJobModal() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="ml-auto">Add New Job</Button>
+                <Button className="ml-auto">Edit Job</Button>
             </DialogTrigger>
 
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                    <DialogTitle>Create New Job</DialogTitle>
+                    <DialogTitle>Edit Job</DialogTitle>
                     <DialogDescription>
-                        Please fill out the information to create a new job post.
+                        Update the information to edit this job post.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -308,7 +331,7 @@ export default function AddJobModal() {
                                 + Add Criterion
                             </Button>
                             <Button onClick={handleSubmit} disabled={dateError || salaryError.min || salaryError.max || weightExceeded}>
-                                Submit
+                                Save Changes
                             </Button>
                         </div>
                     </div>

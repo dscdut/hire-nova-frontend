@@ -9,7 +9,7 @@ import LayoutMain from '@/app/layout/LayoutMain'
 import PageNotFound from '@/pages/404/PageNotFound'
 import JobBoard from '@/UV/JobBoard'
 import JobDetail from '@/UV/JobDetail'
-import CandidatesDashboard from '@/pages/HR/CandidatesDashboard'
+import JobPostingDashboard from '@/pages/HR/JobPostingDashboard'
 import JobBoard from '@/pages/HR/JobBoard'
 
 export default function useRoutesElements() {

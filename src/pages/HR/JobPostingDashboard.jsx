@@ -4,7 +4,7 @@ import { useState, useMemo } from "react"
 import { ChevronDown, Search, Bell, Filter, ChevronRight } from "lucide-react"
 
 
-export default function CandidatesDashboard() {
+export default function JobPostingDashboard() {
   const [activeTab, setActiveTab] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
   const [sortConfig, setSortConfig] = useState({ key: "appliedDate", direction: "desc" })
