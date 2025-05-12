@@ -16,5 +16,4 @@ export const path = {
     job_detail: '/hr/job-detail',
     dashboard: '/hr/job-dashboard'
   }
-  
 }

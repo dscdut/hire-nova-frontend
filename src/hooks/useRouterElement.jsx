@@ -11,6 +11,7 @@ import JobBoard from '@/UV/JobBoard'
 import JobDetail from '@/UV/JobDetail'
 import JobPostingDashboard from '@/pages/HR/JobPostingDashboard'
 import JobBoard from '@/pages/HR/JobBoard'
+import JobDetail from '@/pages/HR/JobDetail'
 
 export default function useRoutesElements() {
   const location = useLocation()
