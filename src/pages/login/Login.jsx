@@ -58,10 +58,11 @@ export default function Login() {
         setAccessTokenToLS(access_token)
         setRefreshTokenToLS(refresh_token)
         setUserToLS(user)
+        console.log('User:', user.roles)
         navigate(
-          isEqual(user.role, ROLE_ADMIN) || isEqual(user.role, ROLE_EMPLOYEE)
+          isEqual(user.roles[0], ROLE_ADMIN) || isEqual(user.roles[0], ROLE_EMPLOYEE)
             ? path.admin.dashboard
-            : path.home
+            : path.candidate.job
         )
         toast.success('Login success 🚀🚀⚡⚡!')
       },

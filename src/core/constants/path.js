@@ -6,5 +6,9 @@ export const path = {
   blog: '/blog',
   admin: {
     dashboard: '/admin/dashboard'
+  },
+  candidate: {
+    job: '/candidate/job',
+    jobDetail: '/candidate/job/:id',
   }
 }
