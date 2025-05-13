@@ -7,6 +7,8 @@ import Register from '@/pages/register/Register'
 import Dashboard from '@/pages/dashboard/Dashboard'
 import LayoutMain from '@/app/layout/LayoutMain'
 import PageNotFound from '@/pages/404/PageNotFound'
+import JobBoard from '@/UV/JobBoard'
+import JobDetail from '@/UV/JobDetail'
 
 export default function useRoutesElements() {
   const location = useLocation()
@@ -21,6 +23,18 @@ export default function useRoutesElements() {
         <LayoutMain>
           <Dashboard />
         </LayoutMain>
+      )
+    },
+    {
+      path: path.candidate.job,
+      element: (
+        <JobBoard />
+      )
+    },
+    {
+      path: path.candidate.jobDetail,
+      element: (
+        <JobDetail />
       )
     },
     { path: '*', element: <PageNotFound /> }
