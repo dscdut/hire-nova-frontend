@@ -13,7 +13,7 @@ export const path = {
   },
   hr: {
     job_posting: '/hr/job-posting',
-    job_detail: '/hr/job-detail',
-    dashboard: '/hr/job-dashboard'
+    job_detail: '/hr/job-detail/:id',
+    dashboard: '/hr/job-dashboard/:jobId',
   }
 }

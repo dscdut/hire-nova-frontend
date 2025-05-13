@@ -61,7 +61,7 @@ export default function Login() {
         console.log('User:', user.roles)
         navigate(
           isEqual(user.roles[0], ROLE_ADMIN) || isEqual(user.roles[0], ROLE_EMPLOYEE)
-            ? path.admin.dashboard
+            ? path.hr.job_posting
             : path.candidate.job
         )
         toast.success('Login success 🚀🚀⚡⚡!')
