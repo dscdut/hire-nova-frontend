@@ -9,6 +9,9 @@ import LayoutMain from '@/app/layout/LayoutMain'
 import PageNotFound from '@/pages/404/PageNotFound'
 import JobBoard from '@/UV/JobBoard'
 import JobDetail from '@/UV/JobDetail'
+import JobPostingDashboard from '@/pages/HR/JobPostingDashboard'
+import JobBoardHR from '@/pages/HR/JobBoard'
+import JobDetailHR from '@/pages/HR/JobDetail'
 
 export default function useRoutesElements() {
   const location = useLocation()
@@ -35,6 +38,24 @@ export default function useRoutesElements() {
       path: path.candidate.jobDetail,
       element: (
         <JobDetail />
+      )
+    },
+    {
+      path: path.hr.dashboard,
+      element: (
+        <JobPostingDashboard />
+      )
+    },
+    {
+      path: path.hr.job_posting,
+      element: (
+        <JobBoardHR />
+      )
+    },
+    {
+      path: path.hr.job_detail,
+      element: (
+        <JobDetailHR />
       )
     },
     { path: '*', element: <PageNotFound /> }
