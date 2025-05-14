@@ -45,7 +45,6 @@ export default function JobBoard() {
     return ["All Locations", ...Array.from(uniqueLocations)];
   }, [jobListings]);
 
-  // Lọc công việc dựa trên tìm kiếm, địa điểm và trạng thái
   const filteredJobs = useMemo(() => {
     return jobListings.filter(
       (job) =>
@@ -97,12 +96,14 @@ export default function JobBoard() {
           <p className="text-lg max-w-2xl">Explore exciting careers and find your next professional challenge.</p>
         </div>
       </div>
+      
 
       {/* Search and Filter Section */}
-      <div className="container mx-auto -mt-12 px-4">
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="flex flex-wrap gap-4 items-center justify-between">
-            <div className="flex flex-wrap gap-4 items-center">
+           <div className="container mx-auto -mt-2 px-4">
+            <div className="bg-white shadow-lg rounded-lg p-6">
+              <div className="flex flex-wrap gap-4 items-center justify-between">
+                <div className="flex flex-wrap gap-4 items-center">
+
               {/* Search Input */}
               <div className="relative flex-grow min-w-[250px]">
                 <input
@@ -171,13 +172,14 @@ export default function JobBoard() {
             {/* Add New Job Button */}
             <div>
               <button
-                onClick={() => setShowAddModal(true)}
+               onClick={() => setShowAddModal(true)}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md flex items-center gap-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <Plus size={18} /> Add New Job
               </button>
 
-              {showAddModal && <AddJobModal onClose={() => setShowAddModal(false)} />}
+               <AddJobModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+      
               {showEditModal && <EditJobModal job={selectedJob} onClose={() => setShowEditModal(false)} />}
             </div>
           </div>

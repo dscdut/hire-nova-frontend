@@ -12,6 +12,7 @@ import JobDetail from '@/UV/JobDetail'
 import JobPostingDashboard from '@/pages/HR/JobPostingDashboard'
 import JobBoardHR from '@/pages/HR/JobBoard'
 import JobDetailHR from '@/pages/HR/JobDetail'
+import ProtectedRoute from '@/components/landing/ProtectedRoute'
 
 export default function useRoutesElements() {
   const location = useLocation()
@@ -43,19 +44,26 @@ export default function useRoutesElements() {
     {
       path: path.hr.dashboard,
       element: (
-        <JobPostingDashboard />
+        <ProtectedRoute allowedRoles={['HR']}>
+           <JobPostingDashboard />
+        </ProtectedRoute>
+        
       )
     },
     {
       path: path.hr.job_posting,
       element: (
-        <JobBoardHR />
+        <ProtectedRoute allowedRoles={['HR']}>
+            <JobBoardHR />
+        </ProtectedRoute>
       )
     },
     {
       path: path.hr.job_detail,
       element: (
-        <JobDetailHR />
+        <ProtectedRoute allowedRoles={['HR']}>
+            <JobDetailHR /> 
+        </ProtectedRoute >
       )
     },
     { path: '*', element: <PageNotFound /> }

@@ -24,8 +24,7 @@ export default function JobPostingDashboard() {
     }
     try {
       const response = await candidateApi.listCandidate(jobId);
-      console.log("API Response:", response);
-
+     
       if (!Array.isArray(response)) {
         return [response]; 
       }
@@ -116,8 +115,9 @@ export default function JobPostingDashboard() {
     <div className="min-h-screen">
     <Header />
       <div className="bg-gray-50 min-h-screen">
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 shadow-lg flex justify-between items-center rounded-md">
-           <h1 className="text-2xl font-bold text-white">Candidates</h1>
+         <div className="bg-white p-4 shadow-lg flex justify-between items-center rounded-md">
+    
+         <div className="h-12 w-full"></div>
          </div>
 
         <div className="p-4">
