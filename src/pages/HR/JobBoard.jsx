@@ -179,7 +179,6 @@ export default function JobBoard() {
               </button>
 
                <AddJobModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
-      
               {showEditModal && <EditJobModal job={selectedJob} onClose={() => setShowEditModal(false)} />}
             </div>
           </div>
