@@ -185,6 +185,7 @@ export default function JobPostingDashboard() {
                       { key: "email", label: "Email" },
                       { key: "jobPostingName", label: "Job Posting" },
                       { key: "createdAt", label: "Applied Date" },
+                      { key: "resumeFile", label: "CV File " },
                       { key: "status", label: "Status" },
                       { key: "score", label: "Score(%)" },
                     ].map((column) => (
@@ -233,6 +234,20 @@ export default function JobPostingDashboard() {
                         </td>
                         <td className="px-4 py-4 text-sm text-gray-600">
                           {formatDate(candidate.createdAt)}
+                        </td>
+                        <td className="px-4 py-4 text-sm text-gray-600">
+                            {candidate.resumeFile ? (
+                              <a
+                                href={candidate.resumeFile} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="text-blue-600 hover:underline"
+                              >
+                                View CV
+                              </a>
+                            ) : (
+                              "No CV"
+                            )}
                         </td>
                         <td className="px-4 py-4 text-sm">
                           <span
