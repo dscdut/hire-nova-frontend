@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, LogOut, User } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Logo from './Logo'
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
   const [user, setUser] = useState({ name: '', avatar: null }) 
-
+  const navigate = useNavigate()
   useEffect(() => {
     const storedUser = localStorage.getItem('user')
     if (storedUser) {
@@ -36,10 +36,11 @@ const Header = () => {
   }, [isProfileMenuOpen])
 
   const handleLogout = () => {
-    console.log('Logging out...')
-    setIsProfileMenuOpen(false)
-    localStorage.removeItem('user') 
-   
+    localStorage.removeItem('user')
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    setUser(null)
+    navigate('/login',  { replace: true })
   }
 
   return (
@@ -82,14 +83,14 @@ const Header = () => {
                   {user.avatar ? (
                     <img
                       src={user.avatar}
-                      alt={user.name}
+                      alt={user.name} 
                       className="object-cover w-full h-full rounded-full"
                     />
                   ) : (
                     <User className="w-5 h-5" />
                   )}
                 </div>
-                <span className="text-sm font-medium text-white">{user.name || 'Guest'}</span>
+                <span className="text-sm font-medium text-blue">{user.name || 'Guest'}</span>
               </motion.div>
 
               {/* Profile Dropdown */}

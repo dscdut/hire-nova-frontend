@@ -43,7 +43,7 @@ export default function JobBoard() {
       <img
         src="https://github.com/meishenry/HireNova/blob/main/%E1%BB%A8ng%20Vi%C3%AAn/M%C3%B4%20t%E1%BA%A3%20c%C3%B4ng%20vi%E1%BB%87c%20khi%20ch%C6%B0a%20apply%20(%E1%BB%A9ng%20vi%C3%AAn)/images/main-image.jpg?raw=true"
         alt="Banner"
-        className="w-full h-[200px] object-cover"
+        className="w-full h-[500px] object-cover"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-gray-200 py-4">
         <div className="container mx-auto px-4 flex items-center gap-3">

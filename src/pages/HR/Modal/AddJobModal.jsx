@@ -10,8 +10,14 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import { industryApi } from "@/core/services/industry.service"
+import { jobApi } from "@/core/services/job.service"
+import { useQuery, useMutation } from "@tanstack/react-query"
+import { toast } from "react-toastify"
+import { jwtDecode } from "jwt-decode"
 
-export default function AddJobModal() {
+
+export default function AddJobModal({isOpen, onClose}) {
     // State for job fields
     const [jobData, setJobData] = useState({
         industryId: "",
@@ -24,98 +30,120 @@ export default function AddJobModal() {
         level: "",
         startTime: "",
         endTime: "",
-        notes: "", // New field for notes
     })
 
     // State for criteria
     const [criteria, setCriteria] = useState([{ name: "", weight: "", detail: "" }])
-    
-    // State for input validation errors
+
+    // State for validation errors
     const [salaryError, setSalaryError] = useState({ min: false, max: false })
-    const [weightErrors, setWeightErrors] = useState([false])
-    const [dateError, setDateError] = useState(false) // New state for date validation
+    const [dateError, setDateError] = useState(false)
+    const [weightErrors, setWeightErrors] = useState([])
+    const [weightExceeded, setWeightExceeded] = useState(false)
+
+    // Fetch industries
+    const { data: industries = [], isLoading, isError } = useQuery({
+        queryKey: ["industries"],
+        queryFn: async () => {
+            try {
+                const response = await industryApi.listIndustry()
+                return response
+            } catch (error) {
+                toast.error("Failed to load industries!")
+                throw error
+            }
+        },
+        retry: false,
+    })
+
+    // Mutation to create a new job
+    const createJobMutation = useMutation({
+        mutationFn: async (newJob) => {
+            const response = await jobApi.createJob(newJob)
+            return response
+        },
+        onSuccess: () => {
+            toast.success("Job created successfully!")
+        },
+        onError: () => {
+            toast.error("Failed to create job!")
+        },
+    })
 
     // Handle changes for job data fields
     const handleJobDataChange = (field, value) => {
         setJobData({ ...jobData, [field]: value })
-
-        // Validate salary fields
-        if (field === "salaryMin" || field === "salaryMax") {
-            if (value === "" || /^\d+$/.test(value)) {
-                setSalaryError({ ...salaryError, [field === "salaryMin" ? "min" : "max"]: false })
-            } else {
-                setSalaryError({ ...salaryError, [field === "salaryMin" ? "min" : "max"]: true })
-            }
-        }
-
-        // Validate dates
-        if (field === "startTime" || field === "endTime") {
-            const start = field === "startTime" ? value : jobData.startTime
-            const end = field === "endTime" ? value : jobData.endTime
-            if (start && end) {
-                setDateError(new Date(end) <= new Date(start))
-            } else {
-                setDateError(false)
-            }
-        }
     }
 
-    // Update criterion
+    // Handle criteria changes
     const updateCriterion = (index, field, value) => {
-        const updated = [...criteria]
-        
-        if (field === "weight") {
-            if (value === "" || /^\d+$/.test(value)) {
-                updated[index][field] = value
-                const newWeightErrors = [...weightErrors]
-                newWeightErrors[index] = false
-                setWeightErrors(newWeightErrors)
-            } else {
-                const newWeightErrors = [...weightErrors]
-                newWeightErrors[index] = true
-                setWeightErrors(newWeightErrors)
-                return
-            }
-        } else {
-            updated[index][field] = value
-        }
-        
-        setCriteria(updated)
+        const updatedCriteria = [...criteria]
+        updatedCriteria[index][field] = value
+        setCriteria(updatedCriteria)
     }
 
-    // Add new criterion
     const addCriterion = () => {
-        if (totalWeight() < 100) {
-            setCriteria([...criteria, { name: "", weight: "", detail: "" }])
-            setWeightErrors([...weightErrors, false])
-        }
+        setCriteria([...criteria, { name: "", weight: "", detail: "" }])
     }
 
-    // Calculate total weight
     const totalWeight = () => {
-        return criteria.reduce((acc, curr) => {
-            const w = parseFloat(curr.weight)
-            return acc + (isNaN(w) ? 0 : w)
-        }, 0)
+        return criteria.reduce((sum, c) => sum + (parseFloat(c.weight) || 0), 0)
     }
 
-    // Handle form submission
     const handleSubmit = () => {
-        const formData = {
-            ...jobData,
-            criteria,
-        }
-        console.log("Form submitted!", formData)
+
+        const accessToken = localStorage.getItem("access_token")
+    if (!accessToken) {
+        toast.error("Access token is missing!")
+        return
     }
 
-    const weightExceeded = totalWeight() > 100
+    
+    let userId = ""
+    try {
+        const decodedToken = jwtDecode(accessToken)
+        userId = decodedToken.id 
+    } catch (error) {
+        toast.error("Failed to decode access token!")
+        return
+    }
+
+        if (!jobData.industryId || !jobData.title || !jobData.description || !jobData.location) {
+            toast.error("Please fill out all required fields!")
+            return
+        }
+
+        if (isNaN(jobData.salaryMin) || isNaN(jobData.salaryMax)) {
+            setSalaryError({ min: isNaN(jobData.salaryMin), max: isNaN(jobData.salaryMax) })
+            toast.error("Salary must contain numbers only!")
+            return
+        }
+
+        if (new Date(jobData.startTime) >= new Date(jobData.endTime)) {
+            setDateError(true)
+            toast.error("End date must be after start date!")
+            return
+        }
+         const descRateValue = criteria
+        .map((c) => `${c.name} (${c.weight}%): ${c.detail}`)
+        .join("; ")
+        if (totalWeight() > 100) {
+            setWeightExceeded(true)
+            toast.error("Total weight cannot exceed 100!")
+            return
+        }
+
+        const payload = {
+            ...jobData,
+            descRate: descRateValue,
+            userId: userId,
+        }
+        createJobMutation.mutate(payload)
+    }
 
     return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button className="ml-auto">Add New Job</Button>
-            </DialogTrigger>
-
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Create New Job</DialogTitle>
@@ -126,17 +154,24 @@ export default function AddJobModal() {
 
                 <div className="space-y-4">
                     {/* Industry ID (Select) */}
-                    <select
-                        className="w-full border px-3 py-2 rounded"
-                        value={jobData.industryId}
-                        onChange={(e) => handleJobDataChange("industryId", e.target.value)}
-                    >
-                        <option value="">Select Industry</option>
-                        <option value="tech">Technology</option>
-                        <option value="finance">Finance</option>
-                        <option value="healthcare">Healthcare</option>
-                        <option value="education">Education</option>
-                    </select>
+                    {isLoading ? (
+                        <p>Loading industries...</p>
+                    ) : isError ? (
+                        <p className="text-red-500">Failed to load industries.</p>
+                    ) : (
+                        <select
+                            className="w-full border px-3 py-2 rounded"
+                            value={jobData.industryId}
+                            onChange={(e) => handleJobDataChange("industryId", e.target.value)}
+                        >
+                            <option value="">Select Industry</option>
+                            {industries.map((industry) => (
+                                <option key={industry.id} value={industry.id}>
+                                    {industry.name}
+                                </option>
+                            ))}
+                        </select>
+                    )}
 
                     {/* Title */}
                     <input
@@ -147,7 +182,7 @@ export default function AddJobModal() {
                         onChange={(e) => handleJobDataChange("title", e.target.value)}
                     />
 
-                    {/* Location (Select) */}
+                    {/* Location */}
                     <select
                         className="w-full border px-3 py-2 rounded"
                         value={jobData.location}
@@ -174,36 +209,19 @@ export default function AddJobModal() {
 
                         <input
                             type="date"
-                            placeholder="Start Time"
-                            className={`flex-1 border px-3 py-2 rounded ${dateError ? "border-red-500" : ""}`}
+                            className="flex-1 border px-3 py-2 rounded"
                             value={jobData.startTime}
                             onChange={(e) => handleJobDataChange("startTime", e.target.value)}
                         />
-
                         <input
                             type="date"
-                            placeholder="End Time"
-                            className={`flex-1 border px-3 py-2 rounded ${dateError ? "border-red-500" : ""}`}
+                            className="flex-1 border px-3 py-2 rounded"
                             value={jobData.endTime}
                             onChange={(e) => handleJobDataChange("endTime", e.target.value)}
                         />
                     </div>
 
-                    {/* Date validation error */}
-                    {dateError && (
-                        <p className="text-red-500 text-sm mt-1">
-                            End date must be after start date
-                        </p>
-                    )}
-
-                    {/* Notes for start/end dates */}
-                    <textarea
-                        className="w-full border px-3 py-2 rounded"
-                        placeholder="Notes for start and end dates"
-                        rows={3}
-                        value={jobData.notes}
-                        onChange={(e) => handleJobDataChange("notes", e.target.value)}
-                    ></textarea>
+                    
 
                     {/* Salary range */}
                     <div className="flex gap-2 items-center">
@@ -223,11 +241,6 @@ export default function AddJobModal() {
                             onChange={(e) => handleJobDataChange("salaryMax", e.target.value)}
                         />
                     </div>
-                    {(salaryError.min || salaryError.max) && (
-                        <p className="text-red-500 text-sm mt-1">
-                            Salary must contain numbers only
-                        </p>
-                    )}
 
                     {/* Description */}
                     <textarea
@@ -238,25 +251,13 @@ export default function AddJobModal() {
                         onChange={(e) => handleJobDataChange("description", e.target.value)}
                     ></textarea>
 
-                    {/* Description Rate */}
-                    <input
-                        type="text"
-                        placeholder="Description Rate"
-                        className="w-full border px-3 py-2 rounded"
-                        value={jobData.descRate}
-                        onChange={(e) => handleJobDataChange("descRate", e.target.value)}
-                    />
-
-                    {/* Scoring Criteria and Weights */}
+                    {/* Scoring Criteria */}
                     <div className="mt-4">
-                        <h3 className="font-semibold mb-2 text-lg">
-                            Scoring Criteria and Weights
-                        </h3>
-
+                        <h3 className="font-semibold mb-2 text-lg">Scoring Criteria and Weights</h3>
                         <div className="text-sm text-gray-600 mb-2">
                             Total Weight:{" "}
                             <span className={weightExceeded ? "text-red-500 font-bold" : "font-semibold"}>
-                                {totalWeight()} / 100
+                                {totalWeight()}
                             </span>
                         </div>
 
@@ -273,14 +274,14 @@ export default function AddJobModal() {
                                     <input
                                         type="text"
                                         placeholder="Weight (0-100)"
-                                        className={`w-full border px-3 py-2 rounded ${weightErrors[idx] ? "border-red-500" : ""}`}
+                                        className={`w-full border px-3 py-2 rounded ${
+                                            weightErrors[idx] ? "border-red-500" : ""
+                                        }`}
                                         value={c.weight}
                                         onChange={(e) => updateCriterion(idx, "weight", e.target.value)}
                                     />
                                     {weightErrors[idx] && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            Weight must contain numbers only
-                                        </p>
+                                        <p className="text-red-500 text-sm mt-1">Weight must contain numbers only</p>
                                     )}
                                 </div>
                                 <textarea
@@ -289,7 +290,7 @@ export default function AddJobModal() {
                                     rows={2}
                                     value={c.detail}
                                     onChange={(e) => updateCriterion(idx, "detail", e.target.value)}
-                                />
+                                ></textarea>
                             </div>
                         ))}
 
@@ -300,14 +301,13 @@ export default function AddJobModal() {
                         )}
 
                         <div className="flex justify-between mt-2">
-                            <Button
-                                variant="outline"
-                                onClick={addCriterion}
-                                disabled={totalWeight() >= 100}
-                            >
+                            <Button variant="outline" onClick={addCriterion} disabled={totalWeight() >= 100}>
                                 + Add Criterion
                             </Button>
-                            <Button onClick={handleSubmit} disabled={dateError || salaryError.min || salaryError.max || weightExceeded}>
+                            <Button
+                                onClick={handleSubmit}
+                                disabled={dateError || salaryError.min || salaryError.max || weightExceeded}
+                            >
                                 Submit
                             </Button>
                         </div>

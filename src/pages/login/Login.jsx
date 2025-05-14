@@ -15,7 +15,7 @@ import { PASSWORD_TYPE, ROLE_ADMIN, ROLE_EMPLOYEE, TEXT_TYPE } from '@/core/conf
 import { path } from '@/core/constants/path'
 import { mutationKeys } from '@/core/helpers/key-tanstack'
 import { authApi } from '@/core/services/auth.service'
-import { setAccessTokenToLS, setRefreshTokenToLS, setUserToLS } from '@/core/shared/storage'
+import { setAccessTokenToLS, setRefreshTokenToLS, setUserToLS, getAccessTokenFromLS, getUserFromLocalStorage } from '@/core/shared/storage'
 import { LoginSchema } from '@/core/zod/login.zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
@@ -58,7 +58,6 @@ export default function Login() {
         setAccessTokenToLS(access_token)
         setRefreshTokenToLS(refresh_token)
         setUserToLS(user)
-        console.log('User:', user.roles)
         navigate(
           isEqual(user.roles[0], ROLE_ADMIN) || isEqual(user.roles[0], ROLE_EMPLOYEE)
             ? path.hr.job_posting
@@ -89,7 +88,17 @@ export default function Login() {
         form.setValue('email', email)
       }
     }
-  }, [form, rememberMe])
+    const accessToken = getAccessTokenFromLS()
+    const user = getUserFromLocalStorage()
+
+    if (accessToken && user) {
+      navigate(
+        user.roles.includes('ROLE_ADMIN') || user.roles.includes('ROLE_EMPLOYEE')
+          ? path.hr.job_posting
+          : path.candidate.job
+      )
+    }
+  }, [form, rememberMe, navigate])
 
   return (
     <div className="flex min-h-screen bg-gray-50">

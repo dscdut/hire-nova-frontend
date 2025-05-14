@@ -7,15 +7,12 @@ import { ArrowLeft } from "lucide-react"
 export default function JobDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log('Job ID:', id); // Kiểm tra id
 
   const { data: job, isLoading, isError } = useQuery({
     queryKey: ['job', id],
     queryFn: async () => {
       try {
-        console.log('Calling API for Job ID:', id);
         const response = await jobApi.getJobById(id);
-        console.log('API Response:', response);
         return response;
       } catch (error) {
         console.error('API Error:', error);
